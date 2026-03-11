@@ -46,16 +46,22 @@ export default function TutorListing() {
           tutor.subjects.some((s) => s.toLowerCase().includes(lq));
         if (!matches) return false;
       }
-      if (city && tutor.city !== city) return false;
-      if (subject && !tutor.subjects.includes(subject)) return false;
-      if (gender && tutor.gender !== gender) return false;
-      if (tuitionType) {
+      if (city && city !== "all" && tutor.city !== city) return false;
+      if (subject && subject !== "all" && !tutor.subjects.includes(subject))
+        return false;
+      if (gender && gender !== "all" && tutor.gender !== gender) return false;
+      if (tuitionType && tuitionType !== "all") {
         if (tuitionType === "online" && tutor.tuitionType === "offline")
           return false;
         if (tuitionType === "offline" && tutor.tuitionType === "online")
           return false;
       }
-      if (classFilter && !tutor.classes.includes(classFilter)) return false;
+      if (
+        classFilter &&
+        classFilter !== "all" &&
+        !tutor.classes.includes(classFilter)
+      )
+        return false;
       return true;
     });
   }, [q, city, subject, gender, tuitionType, classFilter]);
@@ -66,7 +72,7 @@ export default function TutorListing() {
     gender,
     tuitionType,
     classFilter,
-  ].filter(Boolean).length;
+  ].filter((v) => v !== "" && v !== "all").length;
 
   const clearFilters = () => {
     setQ("");
@@ -137,7 +143,7 @@ export default function TutorListing() {
                 <SelectValue placeholder="City" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Cities</SelectItem>
+                <SelectItem value="all">All Cities</SelectItem>
                 {TN_CITIES.map((c) => (
                   <SelectItem key={c} value={c}>
                     {c}
@@ -150,7 +156,7 @@ export default function TutorListing() {
                 <SelectValue placeholder="Subject" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Subjects</SelectItem>
+                <SelectItem value="all">All Subjects</SelectItem>
                 {SUBJECTS.map((s) => (
                   <SelectItem key={s} value={s}>
                     {s}
@@ -163,7 +169,7 @@ export default function TutorListing() {
                 <SelectValue placeholder="Gender" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Any Gender</SelectItem>
+                <SelectItem value="all">Any Gender</SelectItem>
                 <SelectItem value="male">Male Tutors</SelectItem>
                 <SelectItem value="female">Female Tutors</SelectItem>
               </SelectContent>
@@ -173,7 +179,7 @@ export default function TutorListing() {
                 <SelectValue placeholder="Tuition Type" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Types</SelectItem>
+                <SelectItem value="all">All Types</SelectItem>
                 <SelectItem value="online">Online</SelectItem>
                 <SelectItem value="offline">Home Tuition</SelectItem>
               </SelectContent>
@@ -183,7 +189,7 @@ export default function TutorListing() {
                 <SelectValue placeholder="Class" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Classes</SelectItem>
+                <SelectItem value="all">All Classes</SelectItem>
                 {CLASSES.map((c) => (
                   <SelectItem key={c} value={c}>
                     Class {c}

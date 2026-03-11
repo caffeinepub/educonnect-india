@@ -15,6 +15,31 @@ export interface MockTutor {
   rating: number;
   reviewCount: number;
   hourlyRate: number;
+  qualification: string;
+}
+
+export interface MockReview {
+  id: string;
+  tutorId: string;
+  studentName: string;
+  rating: number;
+  comment: string;
+  date: string;
+}
+
+export interface MockStudent {
+  id: string;
+  name: string;
+  parentName: string;
+  phone: string;
+  email: string;
+  class: string;
+  subjects: string[];
+  city: string;
+  tuitionType: "online" | "offline" | "both";
+  preferredGender: "male" | "female" | "noPreference";
+  registeredAt: string;
+  status: "active" | "inactive";
 }
 
 export const TN_CITIES = [
@@ -64,12 +89,13 @@ export const MOCK_TUTORS: MockTutor[] = [
     tuitionType: "both",
     city: "Chennai",
     experienceYears: 8,
-    bio: "B.Tech graduate from Anna University with 8 years of experience teaching Maths and Physics. Specialized in making complex concepts simple and helping students crack board exams and competitive tests.",
+    bio: "B.Tech graduate from Anna University with 8 years of experience teaching Maths and Physics.",
     photoUrl: "",
     isApproved: true,
     rating: 4.9,
     reviewCount: 124,
     hourlyRate: 500,
+    qualification: "B.Tech, Anna University",
   },
   {
     id: "t2",
@@ -80,12 +106,13 @@ export const MOCK_TUTORS: MockTutor[] = [
     tuitionType: "online",
     city: "Coimbatore",
     experienceYears: 5,
-    bio: "M.Sc Biology from Bharathiar University. Passionate about making Science exciting for students through experiments and visual learning. Students consistently score above 90% under my guidance.",
+    bio: "M.Sc Biology from Bharathiar University. Passionate about making Science exciting.",
     photoUrl: "",
     isApproved: true,
     rating: 4.8,
     reviewCount: 87,
     hourlyRate: 400,
+    qualification: "M.Sc Biology, Bharathiar University",
   },
   {
     id: "t3",
@@ -96,12 +123,13 @@ export const MOCK_TUTORS: MockTutor[] = [
     tuitionType: "offline",
     city: "Madurai",
     experienceYears: 10,
-    bio: "Experienced primary school teacher with a decade of helping young learners build strong foundations in English and Tamil. Patient, caring approach with activity-based teaching.",
+    bio: "Experienced primary school teacher with a decade of helping young learners.",
     photoUrl: "",
     isApproved: true,
     rating: 4.7,
     reviewCount: 203,
     hourlyRate: 350,
+    qualification: "B.Ed, Madurai Kamaraj University",
   },
   {
     id: "t4",
@@ -112,12 +140,13 @@ export const MOCK_TUTORS: MockTutor[] = [
     tuitionType: "both",
     city: "Trichy",
     experienceYears: 7,
-    bio: "IIT alumna specializing in Plus Two Maths and Chemistry. Expert in NEET and JEE preparation. 95% of my students have scored distinction in board exams over the past 5 years.",
+    bio: "IIT alumna specializing in Plus Two Maths and Chemistry.",
     photoUrl: "",
     isApproved: true,
     rating: 5.0,
     reviewCount: 156,
     hourlyRate: 700,
+    qualification: "B.Tech, IIT Madras",
   },
   {
     id: "t5",
@@ -128,12 +157,13 @@ export const MOCK_TUTORS: MockTutor[] = [
     tuitionType: "offline",
     city: "Salem",
     experienceYears: 4,
-    bio: "MA History graduate with a passion for bringing history alive through storytelling. Students find my classes engaging and retain facts effectively for exams.",
+    bio: "MA History graduate with a passion for bringing history alive through storytelling.",
     photoUrl: "",
     isApproved: true,
     rating: 4.6,
     reviewCount: 54,
     hourlyRate: 300,
+    qualification: "M.A History, Periyar University",
   },
   {
     id: "t6",
@@ -144,12 +174,13 @@ export const MOCK_TUTORS: MockTutor[] = [
     tuitionType: "online",
     city: "Chennai",
     experienceYears: 6,
-    bio: "Software engineer turned educator. B.E Computer Science from College of Engineering Guindy. Teaches CS and Maths with a practical, hands-on approach. Specializes in Class 12 Computer Science board preparation.",
+    bio: "Software engineer turned educator. B.E Computer Science from College of Engineering Guindy.",
     photoUrl: "",
     isApproved: true,
     rating: 4.9,
     reviewCount: 98,
     hourlyRate: 600,
+    qualification: "B.E Computer Science, CEG Chennai",
   },
   {
     id: "t7",
@@ -160,12 +191,13 @@ export const MOCK_TUTORS: MockTutor[] = [
     tuitionType: "both",
     city: "Coimbatore",
     experienceYears: 9,
-    bio: "Former NEET faculty with 9 years of experience helping students crack medical entrance exams. Highly experienced in Physics and Chemistry for Plus Two. Proven track record with 200+ NEET qualifiers.",
+    bio: "Former NEET faculty with 9 years of experience helping students crack medical entrance exams.",
     photoUrl: "",
     isApproved: true,
     rating: 4.8,
     reviewCount: 211,
     hourlyRate: 800,
+    qualification: "M.Sc Physics, PSG College",
   },
   {
     id: "t8",
@@ -176,12 +208,13 @@ export const MOCK_TUTORS: MockTutor[] = [
     tuitionType: "online",
     city: "Madurai",
     experienceYears: 3,
-    bio: "B.Ed graduate specializing in middle school English and Geography. Interactive teaching methods with worksheets, maps, and vocabulary games that make learning enjoyable.",
+    bio: "B.Ed graduate specializing in middle school English and Geography.",
     photoUrl: "",
     isApproved: true,
     rating: 4.5,
     reviewCount: 41,
     hourlyRate: 300,
+    qualification: "B.Ed, Mother Teresa University",
   },
   {
     id: "t9",
@@ -192,12 +225,13 @@ export const MOCK_TUTORS: MockTutor[] = [
     tuitionType: "both",
     city: "Tirunelveli",
     experienceYears: 11,
-    bio: "CA Inter qualified with 11 years of teaching Commerce, Accountancy and Economics. Highly specialized in Plus Two Commerce stream. Students regularly top district and state exams.",
+    bio: "CA Inter qualified with 11 years of teaching Commerce, Accountancy and Economics.",
     photoUrl: "",
     isApproved: true,
     rating: 4.9,
     reviewCount: 178,
     hourlyRate: 650,
+    qualification: "CA Inter, ICAI",
   },
   {
     id: "t10",
@@ -208,12 +242,13 @@ export const MOCK_TUTORS: MockTutor[] = [
     tuitionType: "offline",
     city: "Erode",
     experienceYears: 8,
-    bio: "M.A Tamil Literature graduate with deep passion for Tamil language and culture. Experienced in teaching Tamil grammar, poetry, and prose for classes 1-8. Nurturing and patient with young learners.",
+    bio: "M.A Tamil Literature graduate with deep passion for Tamil language and culture.",
     photoUrl: "",
     isApproved: true,
     rating: 4.7,
     reviewCount: 93,
     hourlyRate: 350,
+    qualification: "M.A Tamil Literature, Bharathidasan University",
   },
   {
     id: "t11",
@@ -224,12 +259,13 @@ export const MOCK_TUTORS: MockTutor[] = [
     tuitionType: "both",
     city: "Vellore",
     experienceYears: 5,
-    bio: "B.Sc Maths graduate from VIT Vellore. Specializes in building strong maths foundations for primary and middle school students. Fun, gamified approach to problem solving.",
+    bio: "B.Sc Maths graduate from VIT Vellore. Specializes in building strong maths foundations.",
     photoUrl: "",
     isApproved: true,
     rating: 4.6,
     reviewCount: 67,
     hourlyRate: 400,
+    qualification: "B.Sc Mathematics, VIT University",
   },
   {
     id: "t12",
@@ -240,12 +276,330 @@ export const MOCK_TUTORS: MockTutor[] = [
     tuitionType: "online",
     city: "Tirupur",
     experienceYears: 7,
-    bio: "MBBS graduate turned educator. Expert in Biology and Chemistry for secondary and higher secondary levels. Specializes in NEET Biology preparation with diagram-focused teaching methodology.",
+    bio: "MBBS graduate turned educator. Expert in Biology and Chemistry for NEET preparation.",
     photoUrl: "",
     isApproved: true,
     rating: 4.9,
     reviewCount: 145,
     hourlyRate: 750,
+    qualification: "MBBS, Coimbatore Medical College",
+  },
+];
+
+export const MOCK_STUDENTS: MockStudent[] = [
+  {
+    id: "s1",
+    name: "Arun Prakash",
+    parentName: "Prakash Raman",
+    phone: "+91 98401 12345",
+    email: "arun.prakash@gmail.com",
+    class: "10",
+    subjects: ["Maths", "Physics"],
+    city: "Chennai",
+    tuitionType: "online",
+    preferredGender: "noPreference",
+    registeredAt: "2026-01-15",
+    status: "active",
+  },
+  {
+    id: "s2",
+    name: "Nivetha Suresh",
+    parentName: "Suresh Kumar",
+    phone: "+91 94455 67890",
+    email: "nivetha.s@gmail.com",
+    class: "12",
+    subjects: ["Chemistry", "Biology"],
+    city: "Coimbatore",
+    tuitionType: "both",
+    preferredGender: "female",
+    registeredAt: "2026-01-20",
+    status: "active",
+  },
+  {
+    id: "s3",
+    name: "Dharani Krishnan",
+    parentName: "Krishnan Murugan",
+    phone: "+91 87654 32109",
+    email: "dharani.k@gmail.com",
+    class: "8",
+    subjects: ["English", "Tamil", "Social Science"],
+    city: "Madurai",
+    tuitionType: "offline",
+    preferredGender: "noPreference",
+    registeredAt: "2026-01-25",
+    status: "active",
+  },
+  {
+    id: "s4",
+    name: "Ravi Shankar",
+    parentName: "Shankar Pillai",
+    phone: "+91 99887 65432",
+    email: "ravi.shankar@gmail.com",
+    class: "11",
+    subjects: ["Maths", "Computer Science"],
+    city: "Trichy",
+    tuitionType: "online",
+    preferredGender: "male",
+    registeredAt: "2026-02-01",
+    status: "active",
+  },
+  {
+    id: "s5",
+    name: "Lavanya Mohan",
+    parentName: "Mohan Das",
+    phone: "+91 76543 21098",
+    email: "lavanya.m@gmail.com",
+    class: "9",
+    subjects: ["Science", "Maths"],
+    city: "Salem",
+    tuitionType: "offline",
+    preferredGender: "female",
+    registeredAt: "2026-02-05",
+    status: "active",
+  },
+  {
+    id: "s6",
+    name: "Karthikeyan Raja",
+    parentName: "Raja Murugesan",
+    phone: "+91 90123 45678",
+    email: "karthik.raja@gmail.com",
+    class: "6",
+    subjects: ["Tamil", "Social Science"],
+    city: "Tirunelveli",
+    tuitionType: "offline",
+    preferredGender: "noPreference",
+    registeredAt: "2026-02-10",
+    status: "active",
+  },
+  {
+    id: "s7",
+    name: "Preethi Balan",
+    parentName: "Balan Natarajan",
+    phone: "+91 91234 56789",
+    email: "preethi.b@gmail.com",
+    class: "12",
+    subjects: ["Physics", "Chemistry", "Maths"],
+    city: "Erode",
+    tuitionType: "both",
+    preferredGender: "noPreference",
+    registeredAt: "2026-02-14",
+    status: "active",
+  },
+  {
+    id: "s8",
+    name: "Suresh Venkat",
+    parentName: "Venkat Raman",
+    phone: "+91 92345 67890",
+    email: "suresh.v@gmail.com",
+    class: "4",
+    subjects: ["English", "Maths"],
+    city: "Vellore",
+    tuitionType: "online",
+    preferredGender: "noPreference",
+    registeredAt: "2026-02-18",
+    status: "inactive",
+  },
+  {
+    id: "s9",
+    name: "Ananya Srinivasan",
+    parentName: "Srinivasan Rao",
+    phone: "+91 93456 78901",
+    email: "ananya.s@gmail.com",
+    class: "11",
+    subjects: ["Commerce", "Accountancy", "Economics"],
+    city: "Chennai",
+    tuitionType: "both",
+    preferredGender: "female",
+    registeredAt: "2026-02-22",
+    status: "active",
+  },
+  {
+    id: "s10",
+    name: "Vikram Suba",
+    parentName: "Suba Ramachandran",
+    phone: "+91 94567 89012",
+    email: "vikram.suba@gmail.com",
+    class: "7",
+    subjects: ["Maths", "Science", "English"],
+    city: "Coimbatore",
+    tuitionType: "offline",
+    preferredGender: "male",
+    registeredAt: "2026-03-01",
+    status: "active",
+  },
+  {
+    id: "s11",
+    name: "Divya Selvam",
+    parentName: "Selvam Pandian",
+    phone: "+91 95678 90123",
+    email: "divya.selvam@gmail.com",
+    class: "10",
+    subjects: ["Biology", "Chemistry"],
+    city: "Madurai",
+    tuitionType: "online",
+    preferredGender: "female",
+    registeredAt: "2026-03-05",
+    status: "active",
+  },
+  {
+    id: "s12",
+    name: "Ganesh Prabhu",
+    parentName: "Prabhu Sekaran",
+    phone: "+91 96789 01234",
+    email: "ganesh.p@gmail.com",
+    class: "5",
+    subjects: ["Tamil", "English"],
+    city: "Thanjavur",
+    tuitionType: "offline",
+    preferredGender: "noPreference",
+    registeredAt: "2026-03-08",
+    status: "active",
+  },
+];
+
+export const MOCK_REVIEWS: MockReview[] = [
+  {
+    id: "r1",
+    tutorId: "t1",
+    studentName: "Arun Prakash",
+    rating: 5,
+    comment:
+      "Rajesh sir explains Maths concepts very clearly. My son scored 98/100 in his board exam!",
+    date: "Mar 2026",
+  },
+  {
+    id: "r2",
+    tutorId: "t1",
+    studentName: "Nivetha S",
+    rating: 5,
+    comment:
+      "Excellent teacher. Very patient and thorough. Highly recommended for Class 10 Maths.",
+    date: "Feb 2026",
+  },
+  {
+    id: "r3",
+    tutorId: "t1",
+    studentName: "Dharani K",
+    rating: 5,
+    comment:
+      "Best Maths tutor in Chennai. My daughter loves his teaching style.",
+    date: "Jan 2026",
+  },
+  {
+    id: "r4",
+    tutorId: "t2",
+    studentName: "Ravi Kumar",
+    rating: 5,
+    comment:
+      "Priya ma'am makes Science very interesting. My son went from 60% to 92% in Science!",
+    date: "Mar 2026",
+  },
+  {
+    id: "r5",
+    tutorId: "t2",
+    studentName: "Lakshmi R",
+    rating: 5,
+    comment:
+      "Wonderful online tutor. She uses visual aids and experiments to explain concepts.",
+    date: "Feb 2026",
+  },
+  {
+    id: "r6",
+    tutorId: "t2",
+    studentName: "Suresh M",
+    rating: 4,
+    comment:
+      "Very knowledgeable and caring. My daughter improved a lot in Biology under her guidance.",
+    date: "Jan 2026",
+  },
+  {
+    id: "r7",
+    tutorId: "t3",
+    studentName: "Preethi J",
+    rating: 5,
+    comment:
+      "Arjun sir is amazing with young kids. My son loves going for his Tamil classes.",
+    date: "Mar 2026",
+  },
+  {
+    id: "r8",
+    tutorId: "t3",
+    studentName: "Balu K",
+    rating: 5,
+    comment:
+      "Very patient and nurturing. Excellent for primary school children.",
+    date: "Feb 2026",
+  },
+  {
+    id: "r9",
+    tutorId: "t4",
+    studentName: "Meena S",
+    rating: 5,
+    comment:
+      "Kavitha ma'am is phenomenal. NEET preparation was excellent. My daughter got 650+!",
+    date: "Mar 2026",
+  },
+  {
+    id: "r10",
+    tutorId: "t4",
+    studentName: "Ganesh V",
+    rating: 5,
+    comment:
+      "Best Plus Two Maths tutor. 100/100 in board exams because of her teaching.",
+    date: "Feb 2026",
+  },
+  {
+    id: "r11",
+    tutorId: "t6",
+    studentName: "Kavi T",
+    rating: 5,
+    comment:
+      "Deepa ma'am teaches Computer Science with real examples. Very helpful for practical exams.",
+    date: "Mar 2026",
+  },
+  {
+    id: "r12",
+    tutorId: "t6",
+    studentName: "Hari P",
+    rating: 5,
+    comment:
+      "Excellent online classes. She explains programming concepts step by step.",
+    date: "Feb 2026",
+  },
+  {
+    id: "r13",
+    tutorId: "t7",
+    studentName: "Vijaya M",
+    rating: 5,
+    comment:
+      "Karthik sir helped my son crack NEET Physics. Best investment we ever made.",
+    date: "Mar 2026",
+  },
+  {
+    id: "r14",
+    tutorId: "t7",
+    studentName: "Sathya R",
+    rating: 5,
+    comment: "Brilliant teacher. 200+ NEET qualifiers speak for themselves!",
+    date: "Jan 2026",
+  },
+  {
+    id: "r15",
+    tutorId: "t9",
+    studentName: "Divya S",
+    rating: 5,
+    comment:
+      "Senthil sir is the best Commerce tutor in Tamil Nadu. My accounts score jumped from 55 to 94.",
+    date: "Mar 2026",
+  },
+  {
+    id: "r16",
+    tutorId: "t12",
+    studentName: "Anand B",
+    rating: 5,
+    comment:
+      "Anitha ma'am's NEET Biology preparation is outstanding. Diagrams and explanations are superb.",
+    date: "Mar 2026",
   },
 ];
 
@@ -295,6 +649,24 @@ export const MOCK_PAYMENTS = [
     date: "2026-03-08",
     status: "completed",
   },
+  {
+    id: "p6",
+    student: "Preethi Balan",
+    tutor: "Karthik Balaji",
+    amount: 3200,
+    commission: 320,
+    date: "2026-03-09",
+    status: "completed",
+  },
+  {
+    id: "p7",
+    student: "Ananya Srinivasan",
+    tutor: "Senthil Kumar",
+    amount: 2600,
+    commission: 260,
+    date: "2026-03-10",
+    status: "completed",
+  },
 ];
 
 export const MOCK_PENDING_TUTORS = [
@@ -304,6 +676,7 @@ export const MOCK_PENDING_TUTORS = [
     gender: "male",
     subjects: ["Maths", "Physics"],
     city: "Chennai",
+    qualification: "B.Tech, Anna University",
     submittedAt: "2026-03-09",
   },
   {
@@ -312,6 +685,7 @@ export const MOCK_PENDING_TUTORS = [
     gender: "female",
     subjects: ["English", "Tamil"],
     city: "Coimbatore",
+    qualification: "M.A English, Bharathiar University",
     submittedAt: "2026-03-09",
   },
   {
@@ -320,6 +694,16 @@ export const MOCK_PENDING_TUTORS = [
     gender: "male",
     subjects: ["Commerce", "Economics"],
     city: "Salem",
+    qualification: "M.Com, Periyar University",
+    submittedAt: "2026-03-10",
+  },
+  {
+    id: "pt4",
+    name: "Saranya Devi",
+    gender: "female",
+    subjects: ["Biology", "Chemistry"],
+    city: "Madurai",
+    qualification: "M.Sc Biochemistry, Madurai Kamaraj University",
     submittedAt: "2026-03-10",
   },
 ];

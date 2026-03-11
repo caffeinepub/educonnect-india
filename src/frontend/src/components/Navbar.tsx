@@ -1,14 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Link } from "@tanstack/react-router";
-import { GraduationCap, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useState } from "react";
 import { useInternetIdentity } from "../hooks/useInternetIdentity";
 
 const NAV_LINKS = [
   { label: "Home", to: "/" },
   { label: "Find Tutors", to: "/tutors" },
-  { label: "Post Requirement", to: "/post-requirement" },
+  { label: "Subjects", to: "/subjects" },
+  { label: "Blog", to: "/blog" },
   { label: "Contact", to: "/contact" },
 ];
 
@@ -26,20 +27,11 @@ export default function Navbar() {
           className="flex items-center gap-2 group"
           data-ocid="nav.link"
         >
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl gradient-teal text-white shadow-sm">
-            <GraduationCap className="h-5 w-5" />
-          </div>
-          <div className="flex flex-col leading-none">
-            <span className="font-display font-bold text-base text-foreground">
-              EduConnect
-            </span>
-            <span
-              className="text-[10px] font-medium tracking-wider"
-              style={{ color: "oklch(0.55 0.14 185)" }}
-            >
-              INDIA · TAMIL NADU
-            </span>
-          </div>
+          <img
+            src="/assets/generated/educonnect-logo-transparent.dim_400x160.png"
+            alt="EduConnect Tamil Nadu"
+            className="h-10 w-auto object-contain"
+          />
         </Link>
 
         {/* Desktop Nav */}
@@ -92,9 +84,11 @@ export default function Navbar() {
           </SheetTrigger>
           <SheetContent side="right" className="w-72">
             <div className="flex flex-col gap-4 pt-4">
-              <span className="font-display font-bold text-lg">
-                EduConnect India
-              </span>
+              <img
+                src="/assets/generated/educonnect-logo-transparent.dim_400x160.png"
+                alt="EduConnect Tamil Nadu"
+                className="h-8 w-auto object-contain self-start"
+              />
               <nav className="flex flex-col gap-1">
                 {NAV_LINKS.map((link) => (
                   <Link

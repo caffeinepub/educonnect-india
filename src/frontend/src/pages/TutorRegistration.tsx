@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useMutation } from "@tanstack/react-query";
-import { CheckCircle2, GraduationCap, Loader2 } from "lucide-react";
+import { CheckCircle2, GraduationCap, Loader2, Upload } from "lucide-react";
 import { motion } from "motion/react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -36,9 +36,12 @@ export default function TutorRegistration() {
     experienceYears: "",
     bio: "",
     photoUrl: "",
+    qualification: "",
+    hourlyRate: "",
   });
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
   const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
+  const [certificateFile, setCertificateFile] = useState<File | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
   const mutation = useMutation({
@@ -92,6 +95,7 @@ export default function TutorRegistration() {
     form.city &&
     form.experienceYears &&
     form.bio &&
+    form.qualification &&
     selectedSubjects.length > 0 &&
     selectedClasses.length > 0;
 
@@ -115,7 +119,7 @@ export default function TutorRegistration() {
         </h2>
         <p className="text-muted-foreground">
           Thank you for registering. Our admin team will review your profile and
-          approve it within 24 hours. You will be notified once approved.
+          approve it within 24 hours.
         </p>
       </div>
     );
@@ -139,8 +143,8 @@ export default function TutorRegistration() {
               Register as Tutor
             </h1>
             <p className="text-muted-foreground">
-              Join EduConnect India and start teaching students across Tamil
-              Nadu
+              Join EduConnect Tamil Nadu and start teaching students across
+              Tamil Nadu
             </p>
           </div>
         </div>
@@ -149,8 +153,8 @@ export default function TutorRegistration() {
           <CardHeader>
             <CardTitle>Personal Information</CardTitle>
             <CardDescription>
-              All fields are required. Your profile will be reviewed before
-              approval.
+              All required fields must be filled. Your profile will be reviewed
+              before approval.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -182,6 +186,20 @@ export default function TutorRegistration() {
                   </SelectContent>
                 </Select>
               </div>
+            </div>
+
+            {/* Qualification */}
+            <div className="space-y-2">
+              <Label htmlFor="qualification">Qualification *</Label>
+              <Input
+                id="qualification"
+                placeholder="e.g. B.Tech, Anna University / M.Sc Mathematics, Madurai Kamaraj University"
+                value={form.qualification}
+                onChange={(e) =>
+                  setForm({ ...form, qualification: e.target.value })
+                }
+                data-ocid="tutor_reg.input"
+              />
             </div>
 
             {/* City & Experience */}
@@ -221,22 +239,38 @@ export default function TutorRegistration() {
               </div>
             </div>
 
-            {/* Tuition Type */}
-            <div className="space-y-2">
-              <Label>Tuition Type *</Label>
-              <Select
-                value={form.tuitionType}
-                onValueChange={(v) => setForm({ ...form, tuitionType: v })}
-              >
-                <SelectTrigger data-ocid="tutor_reg.select">
-                  <SelectValue placeholder="Select tuition type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="online">Online Tuition</SelectItem>
-                  <SelectItem value="offline">Home Tuition</SelectItem>
-                  <SelectItem value="both">Both Online & Home</SelectItem>
-                </SelectContent>
-              </Select>
+            {/* Tuition Type & Hourly Rate */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>Tuition Type *</Label>
+                <Select
+                  value={form.tuitionType}
+                  onValueChange={(v) => setForm({ ...form, tuitionType: v })}
+                >
+                  <SelectTrigger data-ocid="tutor_reg.select">
+                    <SelectValue placeholder="Select tuition type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="online">Online Tuition</SelectItem>
+                    <SelectItem value="offline">Home Tuition</SelectItem>
+                    <SelectItem value="both">Both Online &amp; Home</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="rate">Hourly Fee (₹) *</Label>
+                <Input
+                  id="rate"
+                  type="number"
+                  min="100"
+                  placeholder="e.g. 500"
+                  value={form.hourlyRate}
+                  onChange={(e) =>
+                    setForm({ ...form, hourlyRate: e.target.value })
+                  }
+                  data-ocid="tutor_reg.input"
+                />
+              </div>
             </div>
 
             {/* Subjects */}
@@ -317,6 +351,48 @@ export default function TutorRegistration() {
                 onChange={(e) => setForm({ ...form, photoUrl: e.target.value })}
                 data-ocid="tutor_reg.input"
               />
+            </div>
+
+            {/* Certificate Upload */}
+            <div className="space-y-2">
+              <Label htmlFor="certificate">
+                Upload Certificates (optional)
+              </Label>
+              <div
+                className="border-2 border-dashed border-border rounded-xl p-6 text-center hover:border-primary transition-colors cursor-pointer"
+                onClick={() => document.getElementById("certificate")?.click()}
+                onKeyDown={(e) =>
+                  e.key === "Enter" &&
+                  document.getElementById("certificate")?.click()
+                }
+                data-ocid="tutor_reg.dropzone"
+              >
+                <Upload className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                {certificateFile ? (
+                  <p className="text-sm font-medium text-primary">
+                    {certificateFile.name}
+                  </p>
+                ) : (
+                  <>
+                    <p className="text-sm font-medium">
+                      Click to upload certificates
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      PDF, JPG, PNG up to 5MB
+                    </p>
+                  </>
+                )}
+                <input
+                  id="certificate"
+                  type="file"
+                  accept=".pdf,.jpg,.jpeg,.png"
+                  className="hidden"
+                  onChange={(e) =>
+                    setCertificateFile(e.target.files?.[0] || null)
+                  }
+                  data-ocid="tutor_reg.upload_button"
+                />
+              </div>
             </div>
 
             <Button
