@@ -8,6 +8,11 @@
 
 import { IDL } from '@icp-sdk/core/candid';
 
+export const UserRole = IDL.Variant({
+  'admin' : IDL.Null,
+  'user' : IDL.Null,
+  'guest' : IDL.Null,
+});
 export const PaymentRequest = IDL.Record({
   'studentId' : IDL.Text,
   'stripePaymentId' : IDL.Text,
@@ -34,10 +39,14 @@ export const Gender = IDL.Variant({
 });
 
 export const idlService = IDL.Service({
+  '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
   'approveTutor' : IDL.Func([IDL.Text], [], []),
+  'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
   'createPayment' : IDL.Func([PaymentRequest], [], []),
+  'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
   'getMessage' : IDL.Func([IDL.Nat], [IDL.Opt(Message)], ['query']),
   'getMessages' : IDL.Func([IDL.Text], [IDL.Vec(Message)], ['query']),
+  'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
   'postRequirement' : IDL.Func(
       [IDL.Text, IDL.Text, IDL.Text, TuitionType, Gender, IDL.Text],
       [],
@@ -66,6 +75,11 @@ export const idlService = IDL.Service({
 export const idlInitArgs = [];
 
 export const idlFactory = ({ IDL }) => {
+  const UserRole = IDL.Variant({
+    'admin' : IDL.Null,
+    'user' : IDL.Null,
+    'guest' : IDL.Null,
+  });
   const PaymentRequest = IDL.Record({
     'studentId' : IDL.Text,
     'stripePaymentId' : IDL.Text,
@@ -92,10 +106,14 @@ export const idlFactory = ({ IDL }) => {
   });
   
   return IDL.Service({
+    '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
     'approveTutor' : IDL.Func([IDL.Text], [], []),
+    'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
     'createPayment' : IDL.Func([PaymentRequest], [], []),
+    'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
     'getMessage' : IDL.Func([IDL.Nat], [IDL.Opt(Message)], ['query']),
     'getMessages' : IDL.Func([IDL.Text], [IDL.Vec(Message)], ['query']),
+    'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
     'postRequirement' : IDL.Func(
         [IDL.Text, IDL.Text, IDL.Text, TuitionType, Gender, IDL.Text],
         [],

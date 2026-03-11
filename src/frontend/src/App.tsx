@@ -23,6 +23,7 @@ import PostRequirement from "./pages/PostRequirement";
 import StudentRegistration from "./pages/StudentRegistration";
 import StudyMaterials from "./pages/StudyMaterials";
 import Subjects from "./pages/Subjects";
+import TutorApply from "./pages/TutorApply";
 import TutorListing from "./pages/TutorListing";
 import TutorProfile from "./pages/TutorProfile";
 import TutorRegistration from "./pages/TutorRegistration";
@@ -88,6 +89,11 @@ const tutorProfileRoute = createRoute({
   path: "/tutors/$tutorId",
   component: TutorProfile,
 });
+const tutorApplyRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/tutor-apply",
+  component: TutorApply,
+});
 const tutorRegRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/register-tutor",
@@ -143,6 +149,7 @@ const routeTree = rootRoute.addChildren([
   blogRoute,
   tutorsRoute,
   tutorProfileRoute,
+  tutorApplyRoute,
   tutorRegRoute,
   studentRegRoute,
   postReqRoute,

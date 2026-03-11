@@ -54,7 +54,7 @@ export default function Navbar() {
         {/* Desktop CTA */}
         <div className="hidden md:flex items-center gap-2">
           <Button variant="outline" size="sm" asChild>
-            <Link to="/register-tutor" data-ocid="nav.link">
+            <Link to="/tutor-apply" data-ocid="nav.link">
               Register as Tutor
             </Link>
           </Button>
@@ -104,7 +104,7 @@ export default function Navbar() {
               </nav>
               <div className="flex flex-col gap-2 pt-2 border-t">
                 <Button variant="outline" asChild>
-                  <Link to="/register-tutor" onClick={() => setOpen(false)}>
+                  <Link to="/tutor-apply" onClick={() => setOpen(false)}>
                     Register as Tutor
                   </Link>
                 </Button>

@@ -1,107 +1,93 @@
 import Map "mo:core/Map";
 import List "mo:core/List";
-import Nat "mo:core/Nat";
 
 module {
-  type OldActor = {
-    students : Map.Map<Text, OldStudent>;
-    tutors : Map.Map<Text, OldTutor>;
-    classBookings : List.List<OldClassBooking>;
-    contactMessages : List.List<OldContactMessage>;
-  };
-
-  type OldStudent = {
-    name : Text;
-    email : Text;
-    phone : Text;
-    city : Text;
-    subjectInterest : Text;
-  };
-
-  type OldTutor = {
-    name : Text;
-    email : Text;
-    phone : Text;
-    city : Text;
-    subjectExpertise : Text;
-    experienceYears : Nat;
-    qualification : Text;
-  };
-
-  type OldClassBooking = {
-    studentName : Text;
-    email : Text;
-    phone : Text;
-    subject : Text;
-    preferredDate : Text;
-    preferredTime : Text;
-    message : Text;
-  };
-
-  type OldContactMessage = {
-    name : Text;
-    email : Text;
-    phone : Text;
-    message : Text;
-  };
-
-  type NewActor = {
-    tutors : Map.Map<Text, NewTutor>;
-    requirements : Map.Map<Nat, NewStudentRequirement>;
-    messages : Map.Map<Nat, NewMessage>;
-    payments : Map.Map<Nat, NewPayment>;
-    admins : List.List<Text>;
-    nextRequirementId : Nat;
-    nextMessageId : Nat;
-    nextPaymentId : Nat;
-  };
-
-  type NewGender = {
+  type Gender = {
     #male;
     #female;
     #other;
     #noPreference;
   };
 
-  type NewTuitionType = {
+  type TuitionType = {
     #offline;
     #online;
     #both;
   };
 
-  type NewUserRole = {
+  type UserRole = {
     #student;
     #tutor;
     #admin;
   };
 
-  type NewTutor = {
+  type ApplicationStatus = {
+    #pending;
+    #approved;
+    #rejected;
+  };
+
+  type TutorApplication = {
+    id : Nat;
+    name : Text;
+    email : Text;
+    phone : Text;
+    gender : Gender;
+    subjects : [Text];
+    classes : [Text];
+    tuitionType : TuitionType;
+    city : Text;
+    experienceYears : Nat;
+    qualification : Text;
+    bio : Text;
+    monthlyFees : Nat;
+    status : ApplicationStatus;
+    submittedAt : Int;
+  };
+
+  // Old Tutor had a `role` field
+  type OldTutor = {
     id : Text;
     name : Text;
-    gender : NewGender;
+    gender : Gender;
     subjects : [Text];
     className : [Text];
-    tuitionType : NewTuitionType;
+    tuitionType : TuitionType;
     city : Text;
     experienceYears : Nat;
     bio : Text;
     photoUrl : ?Text;
     isApproved : Bool;
-    role : NewUserRole;
+    role : UserRole;
   };
 
-  type NewStudentRequirement = {
+  // New Tutor without `role`
+  type NewTutor = {
+    id : Text;
+    name : Text;
+    gender : Gender;
+    subjects : [Text];
+    className : [Text];
+    tuitionType : TuitionType;
+    city : Text;
+    experienceYears : Nat;
+    bio : Text;
+    photoUrl : ?Text;
+    isApproved : Bool;
+  };
+
+  type StudentRequirement = {
     id : Nat;
     className : Text;
     subject : Text;
     city : Text;
-    tuitionType : NewTuitionType;
-    preferredGender : NewGender;
+    tuitionType : TuitionType;
+    preferredGender : Gender;
     postedBy : Text;
     postedAt : Int;
   };
 
-  type NewMessage = {
+  type Message = {
     id : Nat;
     senderId : Text;
     receiverId : Text;
@@ -109,7 +95,7 @@ module {
     timestamp : Int;
   };
 
-  type NewPayment = {
+  type Payment = {
     id : Nat;
     studentId : Text;
     tutorId : Text;
@@ -120,16 +106,53 @@ module {
     createdAt : Int;
   };
 
-  public func run(_old : OldActor) : NewActor {
+  type OldActor = {
+    tutors : Map.Map<Text, OldTutor>;
+    requirements : Map.Map<Nat, StudentRequirement>;
+    messages : Map.Map<Nat, Message>;
+    payments : Map.Map<Nat, Payment>;
+    admins : List.List<Text>;
+    nextRequirementId : Nat;
+    nextMessageId : Nat;
+    nextPaymentId : Nat;
+  };
+
+  type NewActor = {
+    tutors : Map.Map<Text, NewTutor>;
+    requirements : Map.Map<Nat, StudentRequirement>;
+    messages : Map.Map<Nat, Message>;
+    payments : Map.Map<Nat, Payment>;
+    applications : Map.Map<Nat, TutorApplication>;
+    admins : List.List<Text>;
+    nextRequirementId : Nat;
+    nextMessageId : Nat;
+    nextPaymentId : Nat;
+    nextApplicationId : Nat;
+  };
+
+  public func run(old : OldActor) : NewActor {
+    let newTutors = old.tutors.map<Text, OldTutor, NewTutor>(
+      func(_id, t) {
+        {
+          id = t.id;
+          name = t.name;
+          gender = t.gender;
+          subjects = t.subjects;
+          className = t.className;
+          tuitionType = t.tuitionType;
+          city = t.city;
+          experienceYears = t.experienceYears;
+          bio = t.bio;
+          photoUrl = t.photoUrl;
+          isApproved = t.isApproved;
+        };
+      }
+    );
     {
-      tutors = Map.empty<Text, NewTutor>();
-      requirements = Map.empty<Nat, NewStudentRequirement>();
-      messages = Map.empty<Nat, NewMessage>();
-      payments = Map.empty<Nat, NewPayment>();
-      admins = List.empty<Text>();
-      nextRequirementId = 0;
-      nextMessageId = 0;
-      nextPaymentId = 0;
+      old with
+      tutors = newTutors;
+      applications = Map.empty<Nat, TutorApplication>();
+      nextApplicationId = 0;
     };
   };
 };

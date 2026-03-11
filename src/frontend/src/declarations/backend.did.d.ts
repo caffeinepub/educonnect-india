@@ -30,11 +30,18 @@ export interface PaymentRequest {
 export type TuitionType = { 'both' : null } |
   { 'offline' : null } |
   { 'online' : null };
+export type UserRole = { 'admin' : null } |
+  { 'user' : null } |
+  { 'guest' : null };
 export interface _SERVICE {
+  '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
   'approveTutor' : ActorMethod<[string], undefined>,
+  'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
   'createPayment' : ActorMethod<[PaymentRequest], undefined>,
+  'getCallerUserRole' : ActorMethod<[], UserRole>,
   'getMessage' : ActorMethod<[bigint], [] | [Message]>,
   'getMessages' : ActorMethod<[string], Array<Message>>,
+  'isCallerAdmin' : ActorMethod<[], boolean>,
   'postRequirement' : ActorMethod<
     [string, string, string, TuitionType, Gender, string],
     undefined

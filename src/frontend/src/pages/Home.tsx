@@ -486,7 +486,7 @@ export default function Home() {
                 className="bg-white text-primary hover:bg-white/90 font-semibold"
                 asChild
               >
-                <Link to="/register-tutor" data-ocid="home.primary_button">
+                <Link to="/tutor-apply" data-ocid="home.primary_button">
                   Register as Tutor
                 </Link>
               </Button>
